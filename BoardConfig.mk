@@ -47,7 +47,6 @@ WIFI_DRIVER_MODULE_NAME := "dhd"
 BOARD_EGL_CFG := device/samsung/d2lte/configs/egl.cfg
 
 # Recovery
-BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/samsung/d2lte/recovery/recovery_keys.c
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_15x24.h\"
 BOARD_USES_MMCUTILS := true
 BOARD_HAS_LARGE_FILESYSTEM := true
@@ -70,7 +69,7 @@ COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE -DQCOM_BSP
 
 # Vendor Init
 TARGET_UNIFIED_DEVICE := true
-TARGET_INIT_VENDOR_LIB := libinit_msm
+TARGET_INIT_VENDOR_LIB := libinit_d2lte
 TARGET_LIBINIT_DEFINES_FILE := device/samsung/d2lte/init/init_d2lte.c
 
 # bluetooth
@@ -93,6 +92,7 @@ COMMON_GLOBAL_CFLAGS += -DQCOM_BSP_CAMERA_ABI_HACK
 ifeq ($(filter cm_apexqtmo cm_expressatt,$(TARGET_PRODUCT)),)
   TARGET_NEED_CAMERA_ZSL := true
   TARGET_ADD_ISO_MODE_1600 := true
+  TARGET_NEED_SAMSUNG_CAMERA_MODE := true
 endif
 TARGET_NEED_DISABLE_FACE_DETECTION := true
 
@@ -102,7 +102,10 @@ COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
 # Separate audio devices for VOIP
 BOARD_USES_SEPERATED_VOIP := true
 
-ifeq ($(filter cm_apexqtmo cm_expressatt,$(TARGET_PRODUCT)),)
+ifeq ($(filter cm_apexqtmo cm_expressatt cm_d2dcm,$(TARGET_PRODUCT)),)
 # Assert
-TARGET_OTA_ASSERT_DEVICE := d2att,d2spr,d2tmo,d2cri,d2mtr,d2usc,d2vzw,d2lte
+TARGET_OTA_ASSERT_DEVICE := d2att,d2spr,d2spi,d2tfnspr,d2tmo,d2cri,d2mtr,d2usc,d2vmu,d2vzw,d2lte
 endif
+
+# Releasetools
+TARGET_RELEASETOOLS_EXTENSIONS := device/samsung/d2lte/releasetools
